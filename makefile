@@ -1,4 +1,4 @@
-onetimepad: new_string.c
+new_string: new_string.c
 	gcc new_string.c -o new_string -Wall
 	
 clean: 

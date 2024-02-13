@@ -55,30 +55,21 @@ int new_strncmp(const char* string1, const char* string2, size_t n)
 
 char* new_strcat(char* destination, const char* source)
 {
-    int desIndex = 0;
+    int desIndex = new_strlen(destination);
     //find end of first string
-    while(destination[desIndex] != '\0')
-    {
-        desIndex++;
-    } 
     int sourceIndex = 0;
     while(source[sourceIndex] != '\0')
     {
         destination[desIndex] = source[sourceIndex];
-        desIndex++; 
-        sourceIndex;
+        desIndex++;     
+        sourceIndex++;
     }
     return destination;
 }
 
 char* new_strncat(char* destination, const char* source, size_t n)
 {
-    int desIndex = 0;
-    //find end of first string
-    while(destination[desIndex] != '\0')
-    {
-        desIndex++;
-    } 
+    int desIndex = new_strlen(destination);
 
     int sourceIndex = 0;
     while(source[sourceIndex] != '\0' || sourceIndex < n)

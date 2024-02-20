@@ -17,7 +17,7 @@ char* new_strncpy(char* destination, const char* source, size_t n)
 {
     int index = 0;
     //copy up till n or until null
-    while(source[index] != '\0' || index < n)
+    while(source[index] != '\0' && index < n)
     {
         destination[index] = source[index];
         index++; 
@@ -50,7 +50,7 @@ int new_strncmp(const char* string1, const char* string2, size_t n)
     int index = 0;  
     //string1 at index is null end, if string2 at index is null will not be equal to string1 at index
     //and if at any point string1 at index is not equal to string2 at index
-    while(string1[index] != '\0' && string1[index] == string2[index] && index < n)
+    while(string1[index] != '\0' && string1[index] == string2[index] && index < n - 1)
     {
         index++;
     }
@@ -103,16 +103,46 @@ size_t new_strlen(const char* string)
 //returns a pointer to the first occurence of character in string or a null pointer if the character cant be found
 char* new_strchr(const char* string, int character)
 {
+    int index = 0;
+    int length = new_strlen(string); 
 
+    while(string[index] != character)
+    {
+        if(index >= length)
+        {
+            return NULL;
+        }
+        index++;
+    } 
+    return (string + index);
 }
 
 //returns a pointer to the first occurrence of the string contained in needle in haystack or a null pointer if it cannot be found
 char* new_strstr(const char* haystack, const char* needle)
 {
+    int hayIndex = 0;
+    int needIndex = 0;
 
+    int hayLength = new_strlen(haystack);
+    int needLength = new_strlen(needle);
+
+    while(hayIndex < hayLength - needLength)
+    {
+        while(haystack[hayIndex] == needle[needIndex] && haystack[hayIndex] != '\0' && needle[needIndex] != '\0')
+        {
+            needIndex++;
+            hayIndex++;
+        }
+        if(needIndex >= needLength)
+        {
+            return (haystack + hayIndex - needIndex);
+        }
+        else
+        {
+            hayIndex = hayIndex - needIndex + 1;
+            needIndex = 0;
+        }
+
+    }
+    return NULL;
 }
-
-
-
-
-

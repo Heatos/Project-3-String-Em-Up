@@ -4,11 +4,12 @@
 char* new_strcpy(char* destination, const char* source)
 {
     int index = 0;
-    while(source[index] != '\0')
+    int length = new_strlen(source);
+    while(index <= length)  //while index is <= length read it in, = is for the '\0' character
     {
         destination[index] = source[index];
         index++; 
-    }
+    }       
     return destination;
 }
 
@@ -16,13 +17,14 @@ char* new_strcpy(char* destination, const char* source)
 char* new_strncpy(char* destination, const char* source, size_t n)
 {
     int index = 0;
+    int length = new_strlen(source);
     //copy up till n or until null
-    while(source[index] != '\0' && index < n)
+    while(index <= length && index < n) //same as new_strcpy but it will stop at n
     {
         destination[index] = source[index];
         index++; 
     }
-    //fill rest with null
+    //fill rest with null 
     while(index < n)
     {
         destination[index] = '\0';
@@ -69,7 +71,7 @@ char* new_strcat(char* destination, const char* source)
 		desIndex++;     
 		sourceIndex++;
     }
-    destination[desIndex] = '\0';
+    destination[desIndex] = '\0';   //ends the string wtil a null because it doesn't rea the '\0' character
     return destination;
 }
 
@@ -108,13 +110,13 @@ char* new_strchr(const char* string, int character)
 
     while(string[index] != character)
     {
-        if(index >= length)
+        if(index >= length)         //if index goes over the length, return null
         {
             return NULL;
         }
         index++;
     } 
-    return (string + index);
+    return (string + index);        //returns the pointer offset by index 
 }
 
 //returns a pointer to the first occurrence of the string contained in needle in haystack or a null pointer if it cannot be found
@@ -126,23 +128,29 @@ char* new_strstr(const char* haystack, const char* needle)
     int hayLength = new_strlen(haystack);
     int needLength = new_strlen(needle);
 
+    //if needle can still be inside of the haystack
     while(hayIndex < hayLength - needLength)
     {
+        //we see if the needle is at this index
         while(haystack[hayIndex] == needle[needIndex] && haystack[hayIndex] != '\0' && needle[needIndex] != '\0')
         {
             needIndex++;
             hayIndex++;
         }
-        if(needIndex >= needLength)
+        //if the needIndex is >= needLength we know we found needle, reaturn the pointer starting at the first 
+        //letter
+        if(needIndex >= needLength) 
         {
             return (haystack + hayIndex - needIndex);
         }
-        else
+        //otherwise we did not find the needle and have to go surching starting one offset of where we started last
+        else 
         {
             hayIndex = hayIndex - needIndex + 1;
             needIndex = 0;
         }
 
     }
+    //if we get through all of haystack without finding needle, returna null pointer
     return NULL;
 }
